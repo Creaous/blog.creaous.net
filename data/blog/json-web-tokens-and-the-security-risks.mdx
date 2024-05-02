@@ -1,0 +1,81 @@
+---
+title: JSON Web Tokens and the Security Risks
+summary: JSON Web Tokens are a great way to transfer data between two parties, but they have some security risks.
+date: '2023-12-17'
+tags: ['Coding']
+draft: false
+---
+
+> "JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted." - RFC 7519
+
+On paper, these tokens sound extremely useful, and they are. However, not everything is useful with these tokens. They are stateless tokens, which means that they do not need to be stored in a database. This is super useful for basic web apps that don't need "advanced" security features. Sounds great! Let's start using them. Well, after many months, I have decided against using them in my new social media platform.
+
+### Why have I decided against them?
+
+Although JWTs can be very useful in a lot of scenarios, one scenario it isn't useful in is a social media networking site. You may be wondering why they aren't useful in this scenario and this is due to the stateless nature of them. Stateless means that we (developers) cannot revoke tokens and we can't keep track of them. This shows a huge security flaw in the design of them.
+
+Security is one of the top priorities that I have for making my new social media site. Since we can't revoke JWTs, this means that actions that are useful to secure your account aren't possible. For example, a sign-out of all devices button wouldn't be functional because we can't revoke the tokens. What can we do to fix this? Well, not much, we could store the JWTs in a database but that defeats the purpose of them. Alternatively, we can have a short expiration time.
+
+The short expiration time would mean that after a while, all sessions will be effectively destroyed. This would prevent some security risks, but there's a chance that it can still be exploited if used within the expiration time frame. Another fix would be using two tokens, an access token and a refresh token. The refresh token could expire in a day, whereas an access token could expire after 10 minutes.
+
+However, this brings us back to the same problem. If a hacker were to compromise an end user's device and steal the tokens, they could just use the refresh token to continuously renew the access token. No matter what we do to JWTs, they'll always have some sort of security flaw that hackers could use and abuse to gain access to user's accounts.
+
+JWTs can also be edited and can be used to mask a token as someone else, this can happen if the developers didn't properly encrypt JWTs before sending them to the client. Another shortcoming of JWTs is that they are effectively invalidated upon restart of a server (like a basic Node.js server), this is useful to invalidate them all but can be problematic for a social media site.
+
+### What should be used instead?
+
+The simple answer is session stores. These can be used to store a user session in something like a Redis service, or database (Prisma w/ PostgreSQL). This allows users and administrators/moderators of the site to revoke any session at any time. These also have shortcomings but are much easier to manage revocation.
+
+### An example of an attack
+
+All of my writing is fine, but I thought I should think of an actual example of an attack that could occur if I used JWTs in my project. The following is a completely made-up scenario that has not occurred in real life and any resemblance is merely a coincidence.
+
+Picture this, you're a popular artist on the new social media platform: TrendSpark. In the short time you have been active, you have amassed over 100 thousand followers, being one of the most followed users on the whole site. However, with all this popularity, comes an issue. Some people don't like you due to your beliefs.
+
+A hacker reverse engineers the site's session tokens and discovers that they are simple JWTs. With this knowledge, they have two options: figure out how and if they can decrypt them, or hijack your refresh token by various means, such as phishing or finding a site vulnerability. They chose the latter and decided to try and social engineer you to hijack your browser.
+
+They buy a stolen account off of a popular hacking forum and change it around to look like a normal user who joined months ago, let's call the account "Jack". Jack contacts you to ask if he can commission you to get some art for his streaming channel. You agree and Jack sends you his reference sheet for his character.
+
+You click the link that Jack sent to you and download the PDF file containing the reference sheet. You start drawing his requested art pieces and not before long, you finish them and send them back to Jack. A couple of days have passed since Jack commissioned you, and you've done more art pieces since then.
+
+#### The attack
+
+You sit down and watch some TV shows until 9 pm. You decide that it's been long enough and check your emails. You read the subjects of some emails, and to your horror, they say "TrendSpark account password changed", "TrendSpark new email change confirmation" and "TrendSpark account suspended".
+
+Confused, you try to open the TrendSpark app, which works and you can still view things despite the fact you were suspended. When you check the infractions that were inflicted on your account, you see "Hate speech", "Harassment" and "Doxxing".
+
+You know that you never did this and decided to check the posts that were included in the infractions. These are completely random posts that were posted while you were out for lunch with your friends and you were so occupied you had no opportunity to post anything.
+
+You check your profile and see that your name, description and every other possible fillable field has been changed to derogatory slurs. Your profile picture has been changed to something NSFW and there are at least 10 posts with NSFW pictures, which forced your account to switch to NSFW mode.
+
+#### How did it happen?
+
+But, what happened? Where did it all go wrong? How did someone gain access to your account? Well, it was simple. You opened a malicious PDF file that ran unsigned code on your device and gave the hacker access to everything, including all browser passwords.
+
+The hacker had kept your refresh token for a couple of days, hoping that you would forget about the encounter. He noticed that there was a period of inactivity on your computer, as well as your account and decided that the time was now to edit his refresh token to be yours.
+
+After 5 minutes, his access token had expired and instead of refreshing his account's token, it refreshed your account's token and just like that, he was in your account with full access. He used your account to spread hate speech, dox other users on the site (by checking DMs) and harass people.
+
+This was enough for your follower count to drop from 100k to 90k while your account was still active and the attack was occurring, all without your knowledge. Most users of the site were oblivious that you were hacked and assumed that you had done this all yourself, tarnishing your reputation in the process.
+
+#### The aftermath
+
+Just like that, the TrendSpark reports came in through to the staff members and they had taken appropriate action on your account. Due to the sudden change in activity on your account, they decided to immediately suspend the account after 3 violations instead of the normal six.
+
+Lucky for you, when they noticed the sudden change, they assumed you were hacked and as a result suspended the account to prevent any further damages. Upon rechecking your email you read "Your TrendSpark account has had a sudden change in activity and received 3 violations in the past 2 hours. As a result, we have decided to immediately suspend your account as we have reason to believe it was compromised.".
+
+After emailing TrendSpark, your account was reactivated and you were able to continue your artist career, but of course, a lot of people are going to be sceptical about you, and also your security. Since they don't want to hire someone and run the risk of their details being leaked.
+
+#### How could this have been avoided?
+
+Well, we kind of moved away from the main topic of this post, and that was to discuss the security flaws in JWTs. The reason why Jack was able to gain access to the account so easily was due to social engineering, which isn't a problem of JWTs but a personal security issue.
+
+However, Jack was only able to stay in the account because the staff members had no way to invalidate the refresh token and even if you had noticed the attack, you had no other option but to watch your account burn as you get violations and the eventual suspension.
+
+If TrendSpark had decided to use sessions instead of JWTs, this situation could've ended differently. Using a session store meant that you or TrendSpark staff could have destroyed all sessions relating to your account, forcing you to log back in. Without the hacker knowing your 2FA secret, they would've been locked out.
+
+You could've performed damage control and changed the password and email to be completely different from the original. Logged back in, changed back your details, apologized stating that your account was compromised and the issue has since been resolved.
+
+### Conclusion
+
+In conclusion, I believe that JSON Web Tokens should only be used for short expiration like file uploads. These should never be used for large-scale application use cases, like a social media site. Instead, session stores should be used to keep track of and have access to revoke them at any time.

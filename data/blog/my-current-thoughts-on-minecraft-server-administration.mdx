@@ -1,0 +1,55 @@
+---
+title: 'My current thoughts on Minecraft server administration'
+summary: 'Talking about my experience with running a Minecraft server and how it has improved over time.'
+date: '2024-01-15'
+tags: ['Servers']
+draft: false
+---
+
+### A little background
+
+I used to run a Minecraft server to play on with my friends. Originally, we started on an Azure server, then later moved to a server with limited RAM and CPU that was a power-hungry machine. Due to the circumstances where the server was, the internet was only about ~10 mbps which meant that we lagged a lot. This was a Paper server with a couple of plugins such as a custom world generation one.
+
+Later on, the Minecraft server was moved to a much more powerful server that has an Xeon processor and 128 GB of RAM (the virtual machine has 32 GB). After lots of server resets, I started creating a network with multiple servers (proxy, lobby, build, SMP, theatre and arena). This is where my server status is currently as we are resetting the server once again.
+
+### How it felt
+
+Running these servers was not easy. Originally it was due to the limited CPU and RAM, but also the plugin administration was a little tough. Don't get me wrong, some of these plugins were really easy to set or just needed a little learning to get working. But, I always had problems like bugs, crashes, permission issues (my fault), etc.
+
+I used plugins like Oraxen, Model Engine, Nova, QualityArmory, MTVehicles and many more. These were the most complicated due to the resource packs and technical knowledge. I always had problems with these the most, resource packs didn't like getting combined, sometimes Nova would just randomly break, and MTVehicles broke a couple of times.
+
+### How it is now
+
+I'm just going to start this part off by saying, **wow**. As I'm writing this, I'm working on a new reset of the server. Due to the limitations of my friend's devices, it needs to be a "vanilla" experience, thus I'm sticking with Paper (with a modded client).
+
+#### Terra
+
+I don't like Vanilla Minecraft and that's why I wanted custom world generation. I chose the [Terra](https://modrinth.com/plugin/terra?ref=blog.creaous.net) plugin which is what I started using towards the end of the old resets. This is way better than the premium ones that I used to use in the past, some of those randomly crashed the server.
+
+I got three packs for the new reset, Origen (overworld) Tartarus (nether), and ReimagEND (the end). Dropping the packs into the packs folder in the Terra plugin folder automatically added them and I added the correct entries to the bukkit.yml file and **_it just worked_**.
+
+#### Nova
+
+As said previously, I don't like Vanilla Minecraft that much. I used Nova to add "mod-like" blocks and items to the server. The plugin used to work well but sometimes broke. Coming back to it now, I see it's still being actively maintained and has been converted into a framework.
+
+Upon further investigation, I have noticed that the developer has started a unified effort with other developers of Craftory, Slimefun and Space. This is amazing to see and I hope that they end up completing this library as it would be a game changer for "mod-like" plugins. Oh, and **_it just worked_**.
+
+#### MTVehicles
+
+I downloaded the build from the Spigot page but it didn't support 1.20.4. I checked the repository and when I looked at the commit history, I noticed some commits for 1.20.4 so I decided to just compile it from the source code with the new commits. After compiling, I just added it to my server and **_it just worked_**.
+
+#### QualityArmory
+
+I installed the build from Spigot and just like all the others, I'm proud to announce that **_it just worked_**. I didn't have to mess around with this plugin at all. One really tiny problem I did notice was that the space was missing between the prefix and message for "not enough money" (which I fixed in the language files).
+
+#### Resource Pack Merging
+
+Going into this, I thought this would be a part that sucked about the new reset. However, I was wrong about this. I was going to use a [resource pack merger](https://merge.elmakers.com/?ref=blog.creaous.net) and upload it to a [site](https://mc-packs.net/?ref=blog.creaous.net) just like how I used to do. Then I remembered that Nova has a way to merge packs.
+
+Previously, the Nova merge feature was kind of broken and required me to edit the base packs for QualityArmory and MTVehicles due to the sounds.json file and a couple of broken JSON files for testing items that those packs had (not sure if they still have those in there).
+
+I uploaded the .zip files of QualityArmory and MTVehicles to the virtual server in the plugins folder. Added them to the base-packs section in the Nova config. Restarted the SMP server, it generated the pack without errors and **_it just worked_**.
+
+### Conclusion
+
+In my opinion, the plugins that I used for my Minecraft server previously have improved a lot. This makes me love the administration of my servers more because it's less of a pain to set up. I want to thank all of the plugin developers who work on these plugins because they are amazing!

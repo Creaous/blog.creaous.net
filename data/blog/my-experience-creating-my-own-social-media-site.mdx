@@ -1,0 +1,61 @@
+---
+title: 'My experience creating my own social media site'
+summary: 'I’ve tried to create social media sites, multiple times. They all failed, why? Today, I discuss the various failures that I had while trying to create my own social media sites, and how they can be prevented in the future.'
+date: '2023-09-01'
+tags: ['Coding']
+draft: false
+---
+
+I've tried to create social media sites, multiple times. They all failed, why? Today, I discuss the various failures that I had while trying to create my own social media sites, and how they can be prevented in the future. This post will not talk about how to start your own, a separate post will be made to discuss that as well.
+
+### My first attempt
+
+I've always wanted to create my own social media site, ever since 2019. During school holidays one year, I decided to work on my own community site that was like Roblox. The project was made in PHP and was entirely coded from scratch, my PHP knowledge was limited at the time.
+
+Of course, this implementation of a "social media" site was quite rudimentary because it didn't feature any actual social features apart from profiles, about me sections, avatars and items. I tried my best to fix the project over the next couple of months to iron out bugs and fix security problems.
+
+Eventually, I realised that the project would need huge changes done to it, such as roles and permissions, an admin dashboard, etc. While implementing a roles and permissions system, I decided that it may be better to just completely recode the project from scratch, now that I knew more PHP.
+
+Over a week, I had tried to create a "version 2" of the site. I started with the posting feature as I thought that would help me get a basic layout for what profiles would need. I had implemented this system after a couple of days, however I was not satisfied with the final product.
+
+The system I implemented was very, very, very laggy, it took forever to fetch the data from the database and display it on the page properly. This wasn't satisfactory and honestly ridiculous because if a post had a huge amount of replies, it could take over a whole minute to load.
+
+### My second attempts
+
+This is where I considered using Node.js. For those who don't know, Node is a server framework that utilises JavaScript. It also has its own package manager called npm, where users can create their own libraries to make development easier. It is widely used, it can be used for web servers, Discord bots, and more.
+
+I started researching on what ways I can do this. I cloned a basic project that was in development which utilised Pocketbase, a software that manages the API and database for you. I added features to this site, it also gave me experience with React.js, a framework developed by Meta that is used for UI.
+
+I decided that these projects weren't satisfactory either and created multiple prototypes that utilised Next.js (similar to React.js) and Strapi (more powerful than Pocketbase). Since Next.js and Strapi weren't familiar to me, I went through about 4 prototypes before deciding that it would be hard to get it working considering the way I was doing it.
+
+### My final attempt
+
+While I had been trying to make my own social media sites, various projects namely Mastodon were growing in popularity due to the decentralised nature and the usage of the ActivityPub protocol. If you don't know, the ActivityPub protocol, by nature is a decentralised standard.
+
+I decided that creating a platform on top of the ActivityPub protocol would be a better idea since it would allow users to communicate with others outside of the site. I decided to try out Soapbox, a fork of Pleroma by Alex Gleason. In a couple of hours, I had the site up and running.
+
+I started promoting it, not expecting it to grow that much. This was a mistake on my behalf. Suddenly, the statistics were sky rocking, with hundreds of users joining over night. The name of the site (Nexify) started trending on Twitter/X. People even started creating parody accounts.
+
+This is where the downfall started to occur. Due to all the traffic from the thousands of users accumulated, the site was lagging under the pressure. Cloudflare, our DNS provider was serving over a 2 million requests, caching thousands, and blocking hundreds of DDoS attacks.
+
+My server was not meant to take this much traffic, I had not predicted the sudden spikes in users. People started wanting their accounts deleted because they stopped trusting the site since others started spreading rumours, however the site kept having problems preventing people from deleting their accounts.
+
+I identified the issue as soon as possible and fixed it by forcefully rewriting the API route to the correct place. This is when I noticed that the storage of the server wouldn't be enough due to all the images being uploaded, I had to do something about it. I started migrating all content to Amazon Web Services S3 storage.
+
+During this time, the site was extremely slow. I had changed the sign ups on the site to be accepted by moderators only. This didn't help and in fact caused problems for moderators, as they started getting spammed with hundreds of sign up requests in their email address inboxes.
+
+I had to leave the house so I couldn't fix the site being extremely slow, I put an under maintenance page on there so people knew that the site had to be fixed. After a couple of hours, I had gained access to a laptop and logged into the control panel, by this time, the site had finally caught up to the requests and was significantly faster.
+
+I reopened the site, however, it just repeated again and again. The traffic was too much for the web server to handle. Eventually, when the peak hours of the site started fading away, the site went back to being way faster. This is when I checked reports and saw a whole bunch of reports about porn and other stuff.
+
+The whole site was collapsing and I couldn't do anything about it. Even having the storage on Amazon didn't help the slow load times. The only option was to shut down the site, effective immediately. This was very disappointing, but it seemed like there was nothing I could do. My mental health was declining due to all the pressure placed on me.
+
+I placed a shut down message on the site's home page, and started deleting all user content and data. It hurt me internally typing the final command to drop all SQL database tables, knowing that all this work that I had done was for nothing. I ran the command, gave away the nexifyhub.com domain and Twitter handle.
+
+It was over, at least, that's what I thought. I was still getting harassed on Twitter, people showing me private screenshots of something that I did, saying that I was a pedophile and there was no way that I could've created a website at 15, asking me when the site will be back and all this other stuff. I still haven't fully recovered from this.
+
+### So what now?
+
+I had made lots of mistakes while creating this site, and I'm learning from those mistakes. This doesn't signify the end of me creating social media sites at all. In fact, I want to try again one day, when I have more knowledge and proper procedures in place. I liked the idea of having my own social media site with a safe community and better moderation.
+
+Again, this doesn't signify the end of creating social media sites for me. This only signifies the end of Nexify, and the NexifyHub brand. In conclusion, I think that with me identifying the mistakes that were made with the Nexify site, I can improve on those mistakes and create a good social media site (not any time soon).
