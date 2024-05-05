@@ -1,0 +1,99 @@
+---
+title: 'How to create your own blog for free'
+summary: 'Many people use platforms like Medium, Blogger, and WordPress to create their own blog. This is a guide on how to create your own blog for free without using any of these platforms.'
+date: '2024-05-05'
+tags: ['Coding']
+draft: false
+---
+
+**Are you here just for the guide? Click [here](#getting-started) to skip right to the guide.**
+
+Many people use platforms like Medium, Blogger, and WordPress to create their own blog. These platforms while powerful can also be a bit limiting and resource-intensive. I used to run many Wordpress websites and they all had the same problem, very slow loading times, in some cases upwards to 5 seconds to load a page.
+
+Now, that's not bad but it's not something I want to serve to visitors of my site. Additionally, I had to install a lot of plugins to make my blog the way I wanted it to be. Another problem I had was the constant hacking attempts occuring due to the nature of Wordpress. None of the attacks were successful as I had used SolidWP Security.
+
+## Why?
+
+I was fed up with the limitations and sluggishness of these platforms. In addition to the sites being slow, I was moving all WordPress sites to Docker containers so if they get hacked, it won't affect the other sites. Moving them to Docker containers would use a lot of resources that I don't have allocated in my Azure plan.
+
+In the past couple of years, I've been working with frameworks like React.js, Next.js, SvelteKit, Astro and more. I had first tried using the blog template included in the Astro create command but it was unfournately missing dark mode and I didn't want to mess with the CSS since it didn't use React or TailwindCSS.
+
+## Getting started
+
+In this guide, we'll be deploying [this open-source blog template](https://github.com/timlrx/tailwind-nextjs-starter-blog)to Vercel (on the hobby plan). This template is a Next.js blog template that uses TailwindCSS for styling and is built with Typescript. Due to the nature of this template, it's not very customizable and I'll be using the default settings.
+
+1. Install prerequisites:
+   - [Node.js 18 or higher](https://nodejs.org/en/download/)
+   - [Bun](https://bun.sh/)
+   - [Visual Studio Code](https://code.visualstudio.com/)
+   - [Git](https://git-scm.com/downloads)
+
+_Note: I will not be writing a guide on how to install these, you can find them on their respective websites._
+
+2. Create a new GitHub account at https://github.com.
+
+3. Visit the repository: https://github.com/timlrx/tailwind-nextjs-starter-blog.
+
+4. Click the green "Use this template" button.
+
+5. Click the "Create a new repository" button.
+
+6. Enter a name for your repository and click "Create repository".
+
+7. Open a new VS project and clone the repository using the terminal:
+
+```bash
+git clone https://github.com/YOURNAME/YOURREPO.git
+```
+
+8. Reopen the project in VS Code using File > Open Folder.
+
+9. Install dependencies:
+
+```bash
+bun i
+```
+
+10. Start the development server:
+
+```bash
+bun dev
+```
+
+11. The template already has great documentation on how to customize the blog. You can find it [here](https://github.com/timlrx/tailwind-nextjs-starter-blog?tab=readme-ov-file#extend--customize).
+
+12. Once you are done, upload your changes to GitHub:
+
+```bash
+git add .
+git commit -m "Update blog"
+git push
+```
+
+## Deploying to Vercel
+
+_**Note:** Vercel **requires** a phone number to verify your account, but does not require a credit card._
+
+1. Sign up for a Vercel account: https://vercel.com/new using GitHub as the provider.
+
+2. Once you've signed up, click the big "Install" button.
+
+3. Select the repository you just created and click "Import".
+
+4. Ensure that the options are as follows:
+
+- **Project Name**: Whatever you want:
+  - **Note:** Vercel with automatically generate a domain name for your project based on this name.
+- **Framework Preset**: Next.js
+- **Root Directory**: `./`
+- **Build and Output Settings**:
+  - **Build Command**: `bun run build`
+  - **Install Command**: `bun i`
+
+5. Click "Deploy" and wait for the deployment to complete.
+
+6. Done! You can now visit your new blog at `https://YOURNAME.vercel.app`.
+
+## Conclusion
+
+I hope this guide has been helpful in getting you started with creating your own blog for free. Remember to customize the blog to your liking and don't forget to add your own content and style. Good luck!
